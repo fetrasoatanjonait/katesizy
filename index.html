@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEFADA | Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+        
+        :root { 
+            --primary: #2563eb;
+            --sidebar: #0f172a;
+            --surface: #ffffff;
+            --bg: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg);
+            color: #1e293b;
+            letter-spacing: -0.01em;
+        }
+
+        .serif-title { font-family: 'Playfair Display', serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .nav-link { 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .active-nav { 
+            background: #2563eb !important; 
+            color: white !important; 
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        tr { transition: all 0.2s; }
+        tr:hover { background-color: #f1f5f9; transform: scale(1.002); }
+
+        .page-view { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .carousel-container { transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
+
+        /* Loader Style */
+        #loader { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <div id="loader" class="fixed inset-0 z-[500] hidden flex flex-col items-center justify-center text-white">
+        <div class="spinner mb-4"></div>
+        <p class="text-xs font-black uppercase tracking-widest animate-pulse">Andraso kely...</p>
+    </div>
+
+    <aside class="w-72 sidebar-gradient text-slate-400 flex flex-col z-50">
+        <div class="p-8 mb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                    <i class="fas fa-church"></i>
+                </div>
+                <div>
+                    <h1 class="text-white font-extrabold tracking-tight text-lg">SEFADA</h1>
+                    <p class="text-[10px] text-blue-400 uppercase font-black tracking-widest">EKAR Antsobolo</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="px-4 space-y-1 flex-1">
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 mb-4">Main Navigation</p>
+            <button onclick="showPage('home')" id="nav-home" class="nav-link active-nav w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold">
+                <i class="fas fa-columns w-5"></i> Dashboard
+            </button>
+            <button onclick="showPage('bureau')" id="nav-bureau" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold">
+                <i class="fas fa-sitemap w-5"></i> Mpanatanteraka
+            </button>
+            <button onclick="showPage('prof')" id="nav-prof" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold">
+                <i class="fas fa-user-graduate w-5"></i> Mpampianatra
+            </button>
+            <button onclick="showPage('history')" id="nav-history" class="nav-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold">
+                <i class="fas fa-broadcast-tower w-5"></i> Vaovao
+            </button>
+        </nav>
+        
+        <div class="p-6">
+            <div class="bg-slate-800/50 rounded-2xl p-4 flex items-center gap-3 border border-slate-700/50">
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold">AD</div>
+                <div>
+                    <p class="text-xs font-bold text-white">Administrateur</p>
+                    <p class="text-[10px] text-slate-500">System v3.0 Pro</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden bg-slate-50">
+        <header class="h-20 bg-white border-b border-slate-200 px-10 flex items-center justify-between">
+            <div>
+                <h2 id="page-display-title" class="text-2xl font-extrabold text-slate-900 tracking-tight">Dashboard</h2>
+                <p class="text-xs text-slate-400 font-medium mt-0.5" id="date-now"></p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative group mr-4">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" placeholder="Hikaroka..." class="bg-slate-100 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500 w-64 transition-all">
+                </div>
+                <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full text-xs font-bold shadow-lg shadow-blue-200 transition-all active:scale-95 flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Ajouter un membre
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-10 custom-scroll">
+            
+            <div id="p-home" class="page-view space-y-10">
+                <div class="relative bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-110 transition-transform duration-700">
+                        <i class="fas fa-church text-[12rem] text-blue-900"></i>
+                    </div>
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Tongasoa eto amin'ny SEFADA</span>
+                        <h2 class="serif-title text-4xl text-slate-900 font-bold mt-4 leading-tight">
+                            Manatanteraka ny iraka <br/><span class="text-blue-600 italic">amin'ny fitiavana.</span>
+                        </h2>
+                        <p class="text-slate-500 mt-6 leading-relaxed text-sm font-medium">
+                            "Andriamanitra dia fitiavana; ary izay mitoetra amin'ny fitiavana no mitoetra ao amin'Andriamanitra, ary Andriamanitra ao aminy."
+                        </p>
+                        <div class="flex gap-4 mt-8">
+                            <button onclick="showPage('prof')" class="px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold hover:shadow-xl transition-all">Hijery mpampianatra</button>
+                            <button onclick="showPage('history')" class="px-6 py-3 bg-white text-slate-900 border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all">Vaovao farany</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 relative overflow-hidden group">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4 class="text-4xl font-black text-slate-900 mb-1" id="stat-profs">0</h4>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Mpampianatra</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 group">
+                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4 class="text-4xl font-black text-slate-900 mb-1">6</h4>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Birao mpandrindra</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 group">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4 class="text-4xl font-black text-slate-900 mb-1" id="stat-stories">0</h4>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Hetsika voarakitra</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl relative h-[400px]">
+                        <div id="carousel-inner" class="carousel-container h-full flex">
+                            <div class="carousel-item min-w-full flex items-center justify-center bg-slate-800 text-slate-600">
+                                <div class="text-center">
+                                    <i class="fas fa-image text-6xl mb-4 opacity-10"></i>
+                                    <p class="font-medium">Tsy misy sary vaovao</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 inset-x-0 p-8 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent">
+                            <div id="carousel-date" class="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-2">-- / -- / ----</div>
+                            <h3 id="carousel-title" class="text-xl text-white font-bold mb-2 uppercase tracking-tight">Hetsika SEFADA</h3>
+                            <p id="carousel-description" class="text-slate-300 text-sm italic max-w-lg opacity-80 italic">Tsy misy vaovao nampidirina.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-700 to-indigo-900 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden">
+                        <div class="absolute -bottom-10 -right-10 opacity-10">
+                            <i class="fas fa-info-circle text-[10rem]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-6">Momba ny SEFADA</h3>
+                        <p class="text-blue-100 text-sm leading-relaxed font-medium mb-6">
+                            Ny SEFADA dia sehatra natao hanamorana ny fitantanana sy ny fandaminana ny mpampianatra katesizy eto amin'ny EKAR Antsobolo.
+                        </p>
+                        <div class="pt-6 border-t border-white/10">
+                            <p class="text-[10px] uppercase font-black tracking-widest text-blue-300 mb-1">Status de l'application</p>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                                <p class="text-xs font-bold">Online / v3.0 Pro</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p-bureau" class="page-view hidden">
+                <div class="bg-white p-16 rounded-[3rem] shadow-sm border border-slate-200 overflow-x-auto custom-scroll min-h-[600px] flex justify-center">
+                    <div id="tree-container" class="flex flex-col items-center"></div>
+                </div>
+            </div>
+
+            <div id="p-prof" class="page-view hidden">
+                <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-100">
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Avatar</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Anarana sy Fanampiny</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Classe iandraiketana</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Laharana finday</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Toerana</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-data" class="divide-y divide-slate-50"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="p-history" class="page-view hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </main>
+
+    <div id="modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-[100] flex items-center justify-center p-6">
+        <div class="bg-white w-full max-w-xl rounded-[2.5rem] shadow-2xl overflow-hidden page-view">
+            <div class="px-10 py-8 border-b border-slate-100 flex justify-between items-center">
+                <h2 class="text-xl font-black text-slate-900 tracking-tight">Hampiditra angona</h2>
+                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-10 space-y-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Type d'entrée</label>
+                    <select id="f-type" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 appearance-none" onchange="toggleForm()">
+                        <option value="prof">Mpampianatra katesizy</option>
+                        <option value="bureau">Mpikambana Birao</option>
+                        <option value="story">Hetsika na Vaovao</option>
+                    </select>
+                </div>
+
+                <div id="person-fields" class="grid grid-cols-2 gap-4">
+                    <input type="text" id="f-nom" placeholder="Anarana" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all">
+                    <input type="text" id="f-prenom" placeholder="Fanampiny" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all">
+                    <select id="f-sexe" class="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold">
+                        <option>Lahy</option>
+                        <option>Vavy</option>
+                    </select>
+                    <input type="text" id="f-phone" placeholder="Laharana finday" class="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium outline-none">
+                    
+                    <div id="bureau-pos-container" class="col-span-2 hidden">
+                        <select id="f-poste" class="w-full p-4 bg-blue-50 border border-blue-100 text-blue-700 rounded-2xl font-bold">
+                            <option value="M1">Mpandrindra I</option><option value="M2">Mpandrindra II</option>
+                            <option value="M3">Mpandrindra III</option><option value="B1">Mpitam-bola I</option>
+                            <option value="B2">Mpitam-bola II</option><option value="S1">Mpitan-tsoratra</option>
+                        </select>
+                    </div>
+                    
+                    <div id="prof-class-container" class="col-span-2">
+                        <select id="f-classe" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold"></select>
+                    </div>
+
+                    <input type="text" id="f-addr" placeholder="Fonenana (Quartier)" class="col-span-2 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium outline-none">
+                </div>
+
+                <div id="story-ui" class="hidden">
+                    <textarea id="f-text" placeholder="Inona ny vaovao..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl h-32 text-sm font-medium outline-none focus:bg-white transition-all"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 px-2">Sary (Optionnel)</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label class="flex flex-col w-full h-32 border-2 border-dashed border-slate-200 rounded-2xl hover:border-blue-400 transition-all cursor-pointer bg-slate-50 hover:bg-blue-50 group">
+                            <div class="flex flex-col items-center justify-center pt-7">
+                                <i class="fas fa-cloud-upload-alt text-2xl text-slate-300 group-hover:text-blue-500 transition-all"></i>
+                                <p class="pt-1 text-xs font-bold text-slate-400 group-hover:text-blue-500">Sélectionner une photo</p>
+                            </div>
+                            <input type="file" id="f-img" class="opacity-0" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-10 bg-slate-50 flex gap-4">
+                <button onclick="closeModal()" class="flex-1 py-4 font-bold text-slate-400 hover:text-slate-600 transition-colors">Hanafoana</button>
+                <button onclick="save()" class="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 active:scale-95 transition-all uppercase tracking-widest text-xs">Tehirizina</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG GITHUB (Comme l'application précédente) ---
+        const config = {
+            token: "ghp_" + "mSQCh8UYW5v7ggHV1ZDo62NSstG0Qd4XorDM",
+            repo: "fetrasoatanjonait/katesizy" 
+        };
+
+        const classes = ["Zaza Mazoto", "Kominio I", "Kominio II", "Kominio III", "Katekomena Ankizy I", "Katekomena Ankizy II", "Fanavaozana I", "Fanavaozana II", "Fankaherezana I", "Fankaherezana II", "Katekomena Olon-dehibe", "Integration"];
+        
+        let db = { profs: [], stories: [], bureau: {
+            M1: { nom: "RAKOTOHARIMANANA", prenom: "Jean Marc", img: "https://ui-avatars.com/api/?name=Jean+Marc&background=1e293b&color=fff", label: "Mpandrindra I" },
+            M2: { nom: "RAKOTONIRINA", prenom: "H.J", img: "https://ui-avatars.com/api/?name=Hajaniaina&background=2563eb&color=fff", label: "Mpandrindra II" },
+            M3: { nom: "RAZAFIMANANTSOA", prenom: "F.J", img: "https://ui-avatars.com/api/?name=Francois&background=2563eb&color=fff", label: "Mpandrindra III" },
+            B1: { nom: "Eleonore", prenom: "", img: "https://ui-avatars.com/api/?name=Eleonore&background=fbbf24&color=fff", label: "Mpitam-bola I" },
+            B2: { nom: "Fenosoa", prenom: "", img: "https://ui-avatars.com/api/?name=Fenosoa&background=fbbf24&color=fff", label: "Mpitam-bola II" },
+            S1: { nom: "Jean Pierre", prenom: "", img: "https://ui-avatars.com/api/?name=Jean+Pierre&background=64748b&color=fff", label: "Mpitan-tsoratra" }
+        }};
+
+        let shas = { database: "" };
+        let carouselIndex = 0;
+        let carouselInterval;
+
+        window.onload = async () => {
+            showLoader(true);
+            await sync();
+            
+            document.getElementById('f-classe').innerHTML = classes.map(c => `<option>${c}</option>`).join('');
+            document.getElementById('date-now').innerText = new Date().toLocaleDateString('mg-MG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            updateStats(); renderBureau(); renderStories(); initCarousel();
+            showLoader(false);
+        };
+
+        // --- MOTEUR DE SYNCHRONISATION GITHUB ---
+        async function sync() {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${config.repo}/contents/sefada_v3.json?t=${Date.now()}`, {
+                    headers: { Authorization: `token ${config.token}` }
+                });
+                if(res.ok) {
+                    const data = await res.json();
+                    shas.database = data.sha;
+                    const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                    db = content;
+                }
+            } catch(e) { console.error("Sync error:", e); }
+        }
+
+        async function push() {
+            showLoader(true);
+            try {
+                const res = await fetch(`https://api.github.com/repos/${config.repo}/contents/sefada_v3.json`, {
+                    method: 'PUT',
+                    headers: { Authorization: `token ${config.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: "Update SEFADA Database",
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(db)))),
+                        sha: shas.database
+                    })
+                });
+                if(res.ok) {
+                    const data = await res.json();
+                    shas.database = data.content.sha;
+                }
+            } catch(e) { console.error("Push error:", e); }
+            showLoader(false);
+        }
+
+        async function uploadToGithub(file, path) {
+            const content = (await toBase64(file)).split(',')[1];
+            const res = await fetch(`https://api.github.com/repos/${config.repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: { Authorization: `token ${config.token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: `Upload: ${path}`, content: content })
+            });
+            return res.ok ? `https://raw.githubusercontent.com/${config.repo}/main/${path}?t=${Date.now()}` : "";
+        }
+
+        // --- FONCTIONS UI ---
+        function initCarousel() {
+            const lastThree = db.stories.slice(-3).reverse();
+            const container = document.getElementById('carousel-inner');
+            const descElement = document.getElementById('carousel-description');
+            const dateElement = document.getElementById('carousel-date');
+            
+            if(lastThree.length > 0) {
+                container.innerHTML = lastThree.map(s => `
+                    <div class="carousel-item min-w-full h-full relative">
+                        <img src="${s.img}" class="w-full h-full object-cover">
+                    </div>
+                `).join('');
+                
+                descElement.innerText = lastThree[0].text;
+                dateElement.innerText = lastThree[0].date;
+
+                if(carouselInterval) clearInterval(carouselInterval);
+                carouselInterval = setInterval(() => {
+                    carouselIndex = (carouselIndex + 1) % lastThree.length;
+                    container.style.transform = `translateX(-${carouselIndex * 100}%)`;
+                    descElement.innerText = lastThree[carouselIndex].text;
+                    dateElement.innerText = lastThree[carouselIndex].date;
+                }, 6000);
+            }
+        }
+
+        function toggleForm() {
+            const type = document.getElementById('f-type').value;
+            document.getElementById('person-fields').classList.toggle('hidden', type === 'story');
+            document.getElementById('story-ui').classList.toggle('hidden', type !== 'story');
+            document.getElementById('bureau-pos-container').classList.toggle('hidden', type !== 'bureau');
+            document.getElementById('prof-class-container').classList.toggle('hidden', type !== 'prof');
+        }
+
+        function updateStats() {
+            document.getElementById('stat-profs').innerText = db.profs.length;
+            document.getElementById('stat-stories').innerText = db.stories.length;
+        }
+
+        function renderBureau() {
+            const b = db.bureau;
+            const tree = document.getElementById('tree-container');
+            tree.innerHTML = `
+                <div class="flex flex-col items-center group">
+                    <div class="w-32 h-32 rounded-[2rem] border-4 border-slate-900 p-1 bg-white shadow-2xl relative overflow-hidden transition-transform group-hover:scale-105">
+                        <img src="${b.M1.img}" class="rounded-[1.5rem] w-full h-full object-cover">
+                    </div>
+                    <div class="bg-slate-900 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mt-4 shadow-lg">${b.M1.label}</div>
+                    <p class="text-sm font-extrabold text-slate-800 mt-2 uppercase tracking-tight">${b.M1.nom} ${b.M1.prenom}</p>
+                </div>
+                <div class="h-12 w-0.5 bg-slate-200"></div>
+                <div class="relative w-full max-w-2xl">
+                    <div class="absolute top-0 left-1/4 right-1/4 h-0.5 bg-slate-200"></div>
+                    <div class="flex justify-around pt-8">
+                        ${[b.M2, b.M3].map(m => `
+                            <div class="flex flex-col items-center">
+                                <div class="absolute top-0 w-0.5 h-8 bg-slate-200"></div>
+                                <div class="w-20 h-20 rounded-2xl border-2 border-blue-500 p-1 bg-white shadow-xl overflow-hidden">
+                                    <img src="${m.img}" class="rounded-xl w-full h-full object-cover">
+                                </div>
+                                <div class="bg-blue-600 text-white px-3 py-1 rounded-full text-[8px] font-bold mt-3 shadow-md">${m.label}</div>
+                                <p class="text-[10px] font-bold mt-2 uppercase text-slate-600">${m.nom}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="h-12 w-0.5 bg-slate-200 mt-4"></div>
+                <div class="relative w-full max-w-4xl">
+                    <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-200"></div>
+                    <div class="flex justify-between pt-8">
+                        ${[b.B1, b.B2, b.S1].map(m => `
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="absolute top-0 w-0.5 h-8 bg-slate-200"></div>
+                                <div class="w-16 h-16 rounded-2xl border-2 border-amber-400 p-1 bg-white shadow-lg overflow-hidden">
+                                    <img src="${m.img}" class="rounded-xl w-full h-full object-cover">
+                                </div>
+                                <div class="bg-amber-400 text-white px-3 py-1 rounded-full text-[8px] font-bold mt-3">${m.label}</div>
+                                <p class="text-[10px] font-medium mt-2 uppercase text-slate-500">${m.nom}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function save() {
+            const type = document.getElementById('f-type').value;
+            const imgFile = document.getElementById('f-img').files[0];
+            const nom = document.getElementById('f-nom').value;
+            const prenom = document.getElementById('f-prenom').value;
+            const mid = Date.now();
+
+            if(!nom && type !== 'story') return alert('Aza fady, fenoy ny anarana');
+
+            showLoader(true);
+            let photoUrl = "";
+            if(imgFile) {
+                photoUrl = await uploadToGithub(imgFile, `sefada_assets/${mid}.png`);
+            }
+
+            if(type === 'bureau') {
+                const pos = document.getElementById('f-poste').value;
+                if(!photoUrl) photoUrl = `https://ui-avatars.com/api/?name=${nom}&background=random&color=fff`;
+                db.bureau[pos] = { ...db.bureau[pos], nom, prenom, img: photoUrl };
+                renderBureau();
+            } else if(type === 'prof') {
+                db.profs.push({ 
+                    id: mid,
+                    nom, prenom, 
+                    phone: document.getElementById('f-phone').value, 
+                    addr: document.getElementById('f-addr').value, 
+                    classe: document.getElementById('f-classe').value, 
+                    img: photoUrl || 'https://ui-avatars.com/api/?name='+nom+'&background=random' 
+                });
+            } else if(type === 'story') {
+                db.stories.push({ 
+                    id: mid,
+                    text: document.getElementById('f-text').value, 
+                    date: new Date().toLocaleDateString('mg-MG'), 
+                    img: photoUrl || 'https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?auto=format&fit=crop&q=80&w=800' 
+                });
+            }
+
+            await push(); // Enregistrement GitHub
+            updateStats(); 
+            closeModal();
+            
+            if(type === 'prof') showPage('prof'); 
+            else if(type === 'story') { renderStories(); initCarousel(); showPage('home'); }
+            else showPage('bureau');
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
+            document.getElementById('nav-' + id).classList.add('active-nav');
+            document.getElementById('p-' + id).classList.remove('hidden');
+            
+            const titles = { home: 'Dashboard', prof: 'Listan\'ny Mpampianatra', bureau: 'Birao Mpandrindra', history: 'Hetsika sy Vaovao' };
+            document.getElementById('page-display-title').innerText = titles[id];
+            
+            if(id === 'prof') renderList(db.profs);
+            if(id === 'history') renderStories();
+        }
+
+        function renderList(data) {
+            const table = document.getElementById('table-data');
+            if(data.length === 0) {
+                table.innerHTML = `<tr><td colspan="5" class="py-20 text-center text-slate-400 font-medium italic">Tsy misy mpampianatra voasoratra mbola hita.</td></tr>`;
+                return;
+            }
+            table.innerHTML = data.map(item => `
+                <tr>
+                    <td class="px-8 py-4"><img src="${item.img}" class="w-10 h-10 rounded-xl object-cover shadow-md border border-white"></td>
+                    <td class="px-8 py-4 text-xs font-bold text-slate-800 uppercase tracking-tight">${item.nom} ${item.prenom}</td>
+                    <td class="px-8 py-4"><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-100">${item.classe}</span></td>
+                    <td class="px-8 py-4 font-mono text-xs text-slate-500">${item.phone || '---'}</td>
+                    <td class="px-8 py-4 text-[10px] font-bold text-slate-400 uppercase italic">${item.addr || '---'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderStories() {
+            const hist = document.getElementById('p-history');
+            if(db.stories.length === 0) {
+                hist.innerHTML = `<div class="col-span-full py-20 text-center text-slate-400 italic">Mbola tsy misy vaovao nampidirina.</div>`;
+                return;
+            }
+            hist.innerHTML = db.stories.slice().reverse().map(s => `
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-200 group hover:shadow-2xl transition-all duration-500">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${s.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-black text-slate-900 uppercase shadow-sm">${s.date}</div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-sm font-medium text-slate-600 leading-relaxed italic">"${s.text}"</p>
+                        <div class="mt-6 pt-6 border-t border-slate-50 flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-[8px] text-blue-600"><i class="fas fa-check"></i></div>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Voamarina</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        function showLoader(s) { document.getElementById('loader').classList[s?'remove':'add']('hidden'); }
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    </script>
+</body>
+</html>
