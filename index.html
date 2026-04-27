@@ -4,17 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SE.FA.DA | EKAR Antsobolo</title>
+    
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/1777037065515.png">
     <meta name="description" content="SEFADA - Sehatra fitantanana sy fandaminana ny mpampianatra katesizy eo anivon'ny EKAR Antsobolo. Irak'Andriamanitra amin'ny fitiavana.">
-    <meta name="keywords" content="SEFADA,SE.FA.DA, EKAR Antsobolo,Antsobolo, Katesizy, Madagascar, Fitantanana, Mpampianatra">
+    <meta name="keywords" content="SEFADA, SE.FA.DA, EKAR Antsobolo, Antsobolo, Katesizy, Madagascar, Fitantanana, Mpampianatra, Tanjona Fetrasoa">
     <meta name="author" content="TANJONA FETRASOA">
     <meta name="robots" content="index, follow">
 
+    <meta property="og:site_name" content="SEFADA">
     <meta property="og:title" content="SEFADA | Management System EKAR Antsobolo">
-    <meta property="og:description" content="Fitantanana ny mpampianatra katesizy sy ny vaovao rehetra.">
+    <meta property="og:description" content="Sehatra fitantanana ny mpampianatra katesizy sy ny vaovao rehetra eo anivon'ny EKAR Antsobolo.">
     <meta property="og:image" content="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/paoly.png">
+    <meta property="og:url" content="https://fetrasoatanjonait.github.io/katesizy/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="mg_MG">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SE.FA.DA | EKAR Antsobolo">
+    <meta name="twitter:description" content="Sehatra fitantanana ny mpampianatra katesizy.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/paoly.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SEFADA",
+      "alternateName": "Sehatra fitantanana ny mpampianatra katesizy",
+      "url": "https://fetrasoatanjonait.github.io/katesizy/",
+      "logo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/1777037065515.png",
+      "description": "Système de gestion des catéchistes de l'EKAR Antsobolo, Madagascar.",
+      "location": {
+        "@type": "Place",
+        "name": "Antananarivo, Madagascar"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Adiministrateur",
+        "areaServed": "MG",
+        "availableLanguage": ["Malagasy", "French"]
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -74,7 +105,6 @@
         
         .carousel-container { transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
 
-        /* Loader Style */
         #loader { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); }
         .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -118,7 +148,9 @@
         
         <div class="p-6">
             <div class="bg-slate-800/50 rounded-2xl p-4 flex items-center gap-3 border border-slate-700/50">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold"><img class="rounded-full"src="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/1777037065515.png"/></div>
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden">
+                    <img alt="Logo SEFADA" src="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/1777037065515.png"/>
+                </div>
                 <div>
                     <p class="text-xs font-bold text-white">Administrateur</p>
                     <p class="text-[10px] text-slate-500">System v3.0 Pro</p>
@@ -148,8 +180,8 @@
             
             <div id="p-home" class="page-view space-y-10">
                 <div class="relative bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-12  group-hover:scale-110 transition-transform duration-700">
-                       <img src="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/paoly.png"/>
+                    <div class="absolute top-0 right-0 p-12 group-hover:scale-110 transition-transform duration-700">
+                       <img alt="Masindahy Paoly" src="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/paoly.png"/>
                     </div>
                     <div class="relative z-10 max-w-2xl">
                         <span class="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Tongasoa eto amin'ny SEFADA</span>
@@ -205,7 +237,7 @@
                         <div class="absolute bottom-0 inset-x-0 p-8 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent">
                             <div id="carousel-date" class="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-2">-- / -- / ----</div>
                             <h3 id="carousel-title" class="text-xl text-white font-bold mb-2 uppercase tracking-tight">Hetsika SEFADA</h3>
-                            <p id="carousel-description" class="text-slate-300 text-sm italic max-w-lg opacity-80 italic">Tsy misy vaovao nampidirina.</p>
+                            <p id="carousel-description" class="text-slate-300 text-sm italic max-w-lg opacity-80">Tsy misy vaovao nampidirina.</p>
                         </div>
                     </div>
 
@@ -324,7 +356,6 @@
     </div>
 
     <script>
-        // --- CONFIG GITHUB (Comme l'application précédente) ---
         const config = {
             token: "ghp_" + "mSQCh8UYW5v7ggHV1ZDo62NSstG0Qd4XorDM",
             repo: "fetrasoatanjonait/katesizy" 
@@ -356,7 +387,6 @@
             showLoader(false);
         };
 
-        // --- MOTEUR DE SYNCHRONISATION GITHUB ---
         async function sync() {
             try {
                 const res = await fetch(`https://api.github.com/repos/${config.repo}/contents/sefada_v3.json?t=${Date.now()}`, {
@@ -401,7 +431,6 @@
             return res.ok ? `https://raw.githubusercontent.com/${config.repo}/main/${path}?t=${Date.now()}` : "";
         }
 
-        // --- FONCTIONS UI ---
         function initCarousel() {
             const lastThree = db.stories.slice(-3).reverse();
             const container = document.getElementById('carousel-inner');
@@ -411,7 +440,7 @@
             if(lastThree.length > 0) {
                 container.innerHTML = lastThree.map(s => `
                     <div class="carousel-item min-w-full h-full relative">
-                        <img src="${s.img}" class="w-full h-full object-cover">
+                        <img alt="Carousel Image" src="${s.img}" class="w-full h-full object-cover">
                     </div>
                 `).join('');
                 
@@ -447,7 +476,7 @@
             tree.innerHTML = `
                 <div class="flex flex-col items-center group">
                     <div class="w-32 h-32 rounded-[2rem] border-4 border-slate-900 p-1 bg-white shadow-2xl relative overflow-hidden transition-transform group-hover:scale-105">
-                        <img src="${b.M1.img}" class="rounded-[1.5rem] w-full h-full object-cover">
+                        <img alt="Mpandrindra I" src="${b.M1.img}" class="rounded-[1.5rem] w-full h-full object-cover">
                     </div>
                     <div class="bg-slate-900 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mt-4 shadow-lg">${b.M1.label}</div>
                     <p class="text-sm font-extrabold text-slate-800 mt-2 uppercase tracking-tight">${b.M1.nom} ${b.M1.prenom}</p>
@@ -460,7 +489,7 @@
                             <div class="flex flex-col items-center">
                                 <div class="absolute top-0 w-0.5 h-8 bg-slate-200"></div>
                                 <div class="w-20 h-20 rounded-2xl border-2 border-blue-500 p-1 bg-white shadow-xl overflow-hidden">
-                                    <img src="${m.img}" class="rounded-xl w-full h-full object-cover">
+                                    <img alt="${m.label}" src="${m.img}" class="rounded-xl w-full h-full object-cover">
                                 </div>
                                 <div class="bg-blue-600 text-white px-3 py-1 rounded-full text-[8px] font-bold mt-3 shadow-md">${m.label}</div>
                                 <p class="text-[10px] font-bold mt-2 uppercase text-slate-600">${m.nom}</p>
@@ -476,7 +505,7 @@
                             <div class="flex flex-col items-center flex-1">
                                 <div class="absolute top-0 w-0.5 h-8 bg-slate-200"></div>
                                 <div class="w-16 h-16 rounded-2xl border-2 border-amber-400 p-1 bg-white shadow-lg overflow-hidden">
-                                    <img src="${m.img}" class="rounded-xl w-full h-full object-cover">
+                                    <img alt="${m.label}" src="${m.img}" class="rounded-xl w-full h-full object-cover">
                                 </div>
                                 <div class="bg-amber-400 text-white px-3 py-1 rounded-full text-[8px] font-bold mt-3">${m.label}</div>
                                 <p class="text-[10px] font-medium mt-2 uppercase text-slate-500">${m.nom}</p>
@@ -525,7 +554,7 @@
                 });
             }
 
-            await push(); // Enregistrement GitHub
+            await push(); 
             updateStats(); 
             closeModal();
             
@@ -555,7 +584,7 @@
             }
             table.innerHTML = data.map(item => `
                 <tr>
-                    <td class="px-8 py-4"><img src="${item.img}" class="w-10 h-10 rounded-xl object-cover shadow-md border border-white"></td>
+                    <td class="px-8 py-4"><img alt="Avatar de ${item.nom}" src="${item.img}" class="w-10 h-10 rounded-xl object-cover shadow-md border border-white"></td>
                     <td class="px-8 py-4 text-xs font-bold text-slate-800 uppercase tracking-tight">${item.nom} ${item.prenom}</td>
                     <td class="px-8 py-4"><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-100">${item.classe}</span></td>
                     <td class="px-8 py-4 font-mono text-xs text-slate-500">${item.phone || '---'}</td>
@@ -573,7 +602,7 @@
             hist.innerHTML = db.stories.slice().reverse().map(s => `
                 <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-200 group hover:shadow-2xl transition-all duration-500">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="${s.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img alt="Hetsika Image" src="${s.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-black text-slate-900 uppercase shadow-sm">${s.date}</div>
                     </div>
                     <div class="p-8">
