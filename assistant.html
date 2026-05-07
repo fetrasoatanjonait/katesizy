@@ -3,160 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Assistant Vocal</title>
+    <title>Assistant Mobile</title>
     <style>
-        :root {
-            --primary: #6366f1;
-            --bg: #0f172a;
-            --text: #f8fafc;
+        :root { --p: #6366f1; --bg: #0f172a; }
+        body { 
+            font-family: sans-serif; background: var(--bg); color: white; 
+            margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
+            transition: background 0.3s;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+        .card { background: #1e293b; padding: 20px; border-radius: 25px; text-align: center; width: 85%; }
+        .btn { 
+            background: var(--p); border: none; width: 100px; height: 100px; 
+            border-radius: 50%; font-size: 40px; color: white; cursor: pointer;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
         }
-
-        .container {
-            text-align: center;
-            background: #1e293b;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 400px;
-        }
-
-        h1 { font-size: 1.5rem; margin-bottom: 2rem; }
-
-        /* Animation du micro */
-        .mic-btn {
-            background: var(--primary);
-            border: none;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 2rem;
-            color: white;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-
-        .mic-btn:active { transform: scale(0.9); }
-
-        .listening {
-            animation: pulse 1.5s infinite;
-            background: #ef4444;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        .status {
-            margin-top: 1.5rem;
-            min-height: 50px;
-        }
-
-        #transcript { color: #94a3b8; font-style: italic; }
-        #response { color: #818cf8; font-weight: bold; margin-top: 10px; }
+        .listening { background: #ef4444; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        #status { margin-top: 20px; color: #94a3b8; }
+        video, audio { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Assistant Vocal</h1>
-        
-        <button id="start-btn" class="mic-btn">🎙️</button>
-        
-        <div class="status">
-            <p id="transcript">Cliquez pour parler...</p>
-            <p id="response"></p>
-        </div>
+    <div class="card">
+        <button id="mic" class="btn">🎙️</button>
+        <p id="status">Appuyez et dites "Lampe", "Musique" ou "Vidéo"</p>
     </div>
 
+    <!-- Lecteurs cachés -->
+    <audio id="playerAudio" src="votre-musique.mp3"></audio>
+    <video id="playerVideo" width="300" controls>
+        <source src="votre-video.mp4" type="video/mp4">
+    </video>
+
     <script>
-        const btn = document.querySelector('#start-btn');
-        const transcriptDisplay = document.querySelector('#transcript');
-        const responseDisplay = document.querySelector('#response');
+        const mic = document.getElementById('mic');
+        const status = document.getElementById('status');
+        const audio = document.getElementById('playerAudio');
+        const video = document.getElementById('playerVideo');
 
-        // Initialisation de la reconnaissance vocale
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
         
-        if (!SpeechRecognition) {
-            transcriptDisplay.innerText = "Désolé, votre navigateur ne supporte pas la voix.";
-        } else {
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'fr-FR';
-            recognition.interimResults = false;
+        if (Speech) {
+            const rec = new Speech();
+            rec.lang = 'fr-FR';
 
-            // Déclenchement au clic
-            btn.addEventListener('click', () => {
-                recognition.start();
-            });
+            mic.onclick = () => rec.start();
 
-            // Quand l'assistant commence à écouter
-            recognition.onstart = () => {
-                btn.classList.add('listening');
-                transcriptDisplay.innerText = "J'écoute...";
-                responseDisplay.innerText = "";
+            rec.onstart = () => {
+                mic.classList.add('listening');
+                status.innerText = "Je vous écoute...";
             };
 
-            // Quand l'assistant a fini d'écouter
-            recognition.onresult = (event) => {
-                btn.classList.remove('listening');
-                const message = event.results[0][0].transcript;
-                transcriptDisplay.innerText = `Vous : "${message}"`;
-                traiterMessage(message.toLowerCase());
-            };
-
-            recognition.onerror = () => {
-                btn.classList.remove('listening');
-                transcriptDisplay.innerText = "Erreur de micro. Réessayez.";
+            rec.onresult = (e) => {
+                mic.classList.remove('listening');
+                const cmd = e.results[0][0].transcript.toLowerCase();
+                status.innerText = `Vous : ${cmd}`;
+                executer(cmd);
             };
         }
 
-        // Logique de réponse
-        function traiterMessage(msg) {
-            let reponse = "Je n'ai pas compris votre demande.";
-
-            if (msg.includes('bonjour') || msg.includes('salut')) {
-                reponse = "Bonjour ! Comment puis-je vous aider aujourd'hui ?";
-            } 
-            else if (msg.includes('heure')) {
-                const temps = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-                reponse = `Il est exactement ${temps}.`;
-            } 
-            else if (msg.includes('ton nom')) {
-                reponse = "Je suis votre assistant vocal créé en HTML, CSS et JS.";
-            }
-            else if (msg.includes('météo')) {
-                reponse = "Je ne suis pas encore connecté à une API météo, mais il semble faire beau dans votre code !";
-            }
-            else if (msg.includes('ouvre google')) {
-                reponse = "C'est parti, j'ouvre Google pour vous.";
-                window.open('https://www.google.com', '_blank');
-            }
-
-            parler(reponse);
-        }
-
-        // Synthèse vocale (L'assistant parle)
-        function parler(texte) {
+        function executer(cmd) {
             const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(texte);
-            utterance.lang = 'fr-FR';
+            let rep = "Je ne peux pas faire ça.";
+
+            // 1. LAMPE (Simulation par écran)
+            if (cmd.includes('lampe') || cmd.includes('lumière')) {
+                document.body.style.background = "white";
+                rep = "J'allume la lumière de l'écran.";
+            } 
             
-            responseDisplay.innerText = texte;
-            synth.speak(utterance);
+            // 2. MUSIQUE
+            else if (cmd.includes('musique') || cmd.includes('joue')) {
+                audio.play();
+                rep = "Je lance la musique.";
+            }
+            else if (cmd.includes('stop')) {
+                audio.pause();
+                video.pause();
+                document.body.style.background = "#0f172a";
+                rep = "J'ai tout arrêté.";
+            }
+
+            // 3. VIDÉO
+            else if (cmd.includes('vidéo')) {
+                video.style.display = "block";
+                video.play();
+                rep = "Voici la vidéo.";
+            }
+
+            const talk = new SpeechSynthesisUtterance(rep);
+            talk.lang = 'fr-FR';
+            synth.speak(talk);
         }
     </script>
 </body>
