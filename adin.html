@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administration CRUD & Upload - EKAR Antsobolo</title>
+    <title>Administration CRUD - EKAR Antsobolo</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -87,7 +87,7 @@
                 <div class="card p-3">
                     <h5 class="p-2 text-muted small text-uppercase font-weight-bold">Menus du site</h5>
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
-                        <button class="nav-link active text-start" data-bs-toggle="pill" onclick="changerSection('bureau')"><i class="fa fa-users me-2"></i> Bureau (7 Membres)</button>
+                        <button class="nav-link active text-start" data-bs-toggle="pill" onclick="changerSection('bureau')"><i class="fa fa-users me-2"></i> Bureau</button>
                         <button class="nav-link text-start" data-bs-toggle="pill" onclick="changerSection('enseignants')"><i class="fa fa-chalkboard-teacher me-2"></i> Enseignants</button>
                         <button class="nav-link text-start" data-bs-toggle="pill" onclick="changerSection('evenements')"><i class="fa fa-calendar-alt me-2"></i> Événements</button>
                         <button class="nav-link text-start" data-bs-toggle="pill" onclick="changerSection('sacrements')"><i class="fa fa-church me-2"></i> Sacrements</button>
@@ -139,9 +139,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // CONFIGURATION GITHUB FIXÉE DIRECTEMENT DANS LE CODE
         const config = {
-            token: "ghp_"+"mSQCh8UYW5v7ggHV1ZDo62NSstG0Qd4XorDM",
+            token: "ghp_" + "mSQCh8UYW5v7ggHV1ZDo62NSstG0Qd4XorDM",
             repo: "fetrasoatanjonait/katesizy"
         };
 
@@ -150,31 +149,31 @@
         let shaActuel = "";
         let indexEnEdition = null;
 
-        // Définition des structures avec distinction pour le type 'file' (Image)
+        // Structure unifiée : toutes les tables profitent d'un champ d'identifiant auto-géré ("id")
         const modelesChiffres = {
             bureau: { 
-                fields: { nom: "text", fonction: "text", telephone: "text", photo: "file", color: "color" }, 
-                headers: ["Nom", "Fonction", "Téléphone"] 
+                fields: { id: "id", nom: "text", fonction: "text", telephone: "text", photo: "file", color: "color" }, 
+                headers: ["ID", "Nom", "Fonction", "Téléphone"] 
             },
             enseignants: { 
-                fields: { id: "number", nom: "text", classe: "text", telephone: "text", email: "email", adresse: "text", photo: "file", profession: "text", service: "text", citation: "textarea" }, 
+                fields: { id: "id", nom: "text", classe: "text", telephone: "text", email: "email", adresse: "text", photo: "file", profession: "text", service: "text", citation: "textarea" }, 
                 headers: ["ID", "Nom", "Classe", "Téléphone"] 
             },
             evenements: { 
-                fields: { id: "number", titre: "text", date: "text", description: "textarea", photos: "file" }, 
+                fields: { id: "id", titre: "text", date: "text", description: "textarea", photos: "file" }, 
                 headers: ["ID", "Titre", "Date"] 
             },
             sacrements: { 
-                fields: { id: "number", nom: "text", date: "text", description: "textarea", photo: "file" }, 
+                fields: { id: "id", nom: "text", date: "text", description: "textarea", photo: "file" }, 
                 headers: ["ID", "Nom", "Période"] 
             },
             actualites: { 
-                fields: { date: "text", titre: "text", description: "textarea", classe: "text" }, 
-                headers: ["Date", "Titre", "Classe"] 
+                fields: { id: "id", date: "text", titre: "text", description: "textarea", classe: "text" }, 
+                headers: ["ID", "Date", "Titre", "Classe"] 
             },
             dons: { 
-                fields: { date: "text", nom: "text", montant: "number", message: "text" }, 
-                headers: ["Date", "Donateur", "Montant"] 
+                fields: { id: "id", date: "text", nom: "text", montant: "number", message: "text" }, 
+                headers: ["ID", "Date", "Donateur", "Montant"] 
             }
         };
 
@@ -185,7 +184,7 @@
 
         function verifierConfiguration() {
             const statusBadge = document.getElementById('statusBadge');
-            if(!config.token || config.token.includes("VOTRE_TOKEN") || config.repo.includes("votreCompte")) {
+            if(!config.token || config.token.includes("VOTRE_TOKEN")) {
                 statusBadge.className = "status-indicator bg-danger text-white";
                 statusBadge.innerHTML = `<i class="fa fa-exclamation-triangle me-2"></i> Configuration manquante`;
             } else {
@@ -205,24 +204,39 @@
             tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-4"><i class="fa fa-sync fa-spin me-2"></i>Récupération depuis GitHub...</td></tr>`;
 
             const url = `https://api.github.com/repos/${config.repo}/contents/${sectionActuelle}.json`;
-console.log(url);
             try {
+                // Suppression de "Cache-Control" pour éviter la panne CORS pré-vol (preflight)
                 const res = await fetch(url, {
-                    headers: { Authorization: `token ${config.token}`, "Cache-Control": "no-cache" }
+                    headers: { Authorization: `token ${config.token}` }
                 });
+                
                 if(res.ok) {
                     const data = await res.json();
                     shaActuel = data.sha;
                     donneesActuelles = JSON.parse(atob(data.content.replace(/\s/g, '')));
+                    
+                    // Injection ou normalisation automatique des ID numériques si manquants
+                    donneesActuelles = donneesActuelles.map((item, idx) => {
+                        if (item.id === undefined || item.id === null || isNaN(item.id)) {
+                            item.id = idx + 1;
+                        } else {
+                            item.id = Number(item.id);
+                        }
+                        return item;
+                    });
+                    
                     genererTableau();
-                } else {
+                } else if (res.status === 404) {
+                    // Si le fichier n'existe pas encore sur le dépôt, initialisation à vide sans crash
                     donneesActuelles = [];
                     shaActuel = "";
                     genererTableau();
+                } else {
+                    throw new Error(`Réponse HTTP instable : ${res.status}`);
                 }
             } catch (err) {
                 console.error(err);
-                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4"><i class="fa fa-times me-2"></i>Erreur lors du chargement.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4"><i class="fa fa-times me-2"></i>Erreur lors du chargement (Problème Token ou Réseau).</td></tr>`;
             }
         }
 
@@ -242,7 +256,7 @@ console.log(url);
                 const keys = Object.keys(modele.fields);
                 let rowCells = "";
                 for(let i=0; i < modele.headers.length; i++) {
-                    let val = item[keys[i]] || '';
+                    let val = item[keys[i]] !== undefined ? item[keys[i]] : '';
                     if(keys[i] === 'montant') val = Number(val).toLocaleString() + " Ar";
                     rowCells += `<td>${val}</td>`;
                 }
@@ -263,7 +277,21 @@ console.log(url);
             let html = "";
 
             for (const [key, type] of Object.entries(fields)) {
-                let val = itemData ? (itemData[key] || '') : '';
+                let val = itemData ? (itemData[key] !== undefined ? itemData[key] : '') : '';
+
+                // Traitement dédié de l'ID unique
+                if (type === 'id') {
+                    if (!itemData) {
+                        const maxId = donneesActuelles.reduce((max, obj) => Number(obj.id) > max ? Number(obj.id) : max, 0);
+                        val = maxId + 1;
+                    }
+                    html += `<div class="mb-3 bg-light p-2 border rounded">
+                        <label class="form-label text-uppercase fw-bold text-muted small mb-0">ID Unique (Généré automatiquement)</label>
+                        <input type="hidden" name="id" value="${val}">
+                        <div class="h5 mb-0 fw-bold text-secondary"># ${val}</div>
+                    </div>`;
+                    continue;
+                }
 
                 html += `<div class="mb-3">
                     <label class="form-label text-capitalize fw-bold small">${key}</label>`;
@@ -271,14 +299,17 @@ console.log(url);
                 if(type === 'textarea') {
                     html += `<textarea class="form-control" name="${key}" rows="3" required>${val}</textarea>`;
                 } else if(type === 'file') {
-                    // Si on est en modification (itemData existe), la photo n'est pas strictement requise (on garde l'ancienne par défaut)
                     html += `<input type="file" class="form-control" name="${key}" accept="image/*" ${!itemData ? 'required' : ''}>`;
                     if(val) {
                         html += `<div class="form-text text-truncate text-muted mt-1">Image actuelle : <a href="${val}" target="_blank" class="small text-decoration-none text-primary fw-bold">${val.split('/').pop()}</a></div>`;
                         html += `<input type="hidden" name="existing_${key}" value="${val}">`;
                     }
+                } else if(type === 'color') {
+                    // Résolution du bug HTML5 des formats Hexa requis pour les color pickers
+                    const validColor = val && val.startsWith('#') ? val : '#5B0E2D';
+                    html += `<input type="color" class="form-control form-control-color w-100" name="${key}" value="${validColor}">`;
                 } else {
-                    html += `<input type="${type}" class="form-control" name="${key}" value="${val}" ${type === 'number' ? 'required' : ''} ${type !== 'color' ? 'required' : ''}>`;
+                    html += `<input type="${type}" class="form-control" name="${key}" value="${val}" ${type === 'number' ? 'required' : ''} required>`;
                 }
                 html += `</div>`;
             }
@@ -294,7 +325,7 @@ console.log(url);
 
         function ouvrirModalEdition(index) {
             indexEnEdition = index;
-            document.getElementById('modalTitle').innerText = `Modifier l'élément #${index + 1} - ${sectionActuelle.toUpperCase()}`;
+            document.getElementById('modalTitle').innerText = `Modifier l'élément #${donneesActuelles[index].id} - ${sectionActuelle.toUpperCase()}`;
             genererChampsFormulaire(donneesActuelles[index]);
             new bootstrap.Modal(document.getElementById('formModal')).show();
         }
@@ -303,10 +334,7 @@ console.log(url);
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = () => {
-                    let base64String = reader.result.split(',')[1];
-                    resolve(base64String);
-                };
+                reader.onload = () => resolve(reader.result.split(',')[1]);
                 reader.onerror = error => reject(error);
             });
         }
@@ -346,13 +374,14 @@ console.log(url);
 
             try {
                 for (const [key, type] of Object.entries(fields)) {
-                    if (type === 'file') {
+                    if (type === 'id') {
+                        nouvelItem[key] = Number(formData.get('id'));
+                    } else if (type === 'file') {
                         const fileInput = formElement.querySelector(`input[name="${key}"]`);
                         if (fileInput && fileInput.files.length > 0) {
                             const file = fileInput.files[0];
                             const base64 = await convertirEnBase64(file);
-                            const urlImagePublique = await uploaderImageVersGit(file.name, base64);
-                            nouvelItem[key] = urlImagePublique; 
+                            nouvelItem[key] = await uploaderImageVersGit(file.name, base64); 
                         } else {
                             nouvelItem[key] = formData.get(`existing_${key}`) || '';
                         }
