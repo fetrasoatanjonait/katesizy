@@ -38,5 +38,13 @@
     "telephone": "gfdg",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783429846623_WIN_20260521_08_35_02_Pro.jpg",
     "color": "#5b0e2d"
+  },
+  {
+    "id": 6,
+    "nom": "gdfg",
+    "fonction": "gfdg",
+    "telephone": "dfgfdg",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783429862240_WIN_20260707_08_23_46_Pro.jpg",
+    "color": "#0e455d"
   }
 ]
