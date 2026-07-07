@@ -22,5 +22,17 @@
     "profession": "fdsf",
     "service": "dsfdsf",
     "citation": "dfsf"
+  },
+  {
+    "id": 3,
+    "nom": "dgfg",
+    "classe": "Katesizy 2ème An",
+    "telephone": "gfdg",
+    "email": "g@gmail.com",
+    "adresse": "fdgd",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783429939872_WIN_20260707_08_23_46_Pro.jpg",
+    "profession": "dfg",
+    "service": "dfgdg",
+    "citation": "fdg"
   }
 ]
