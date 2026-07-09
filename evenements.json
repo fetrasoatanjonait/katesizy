@@ -20,7 +20,14 @@
     "titre": "gfhgf",
     "date": "hgfh",
     "description": "hgf",
-    "photos": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783590051518_669542895_953174713848267_6841947204574566244_n.jpg"
+    "photos": [
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620933119_IMG_20260523_063716.jpg",
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620938918_IMG_20260523_063656.jpg",
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620941157_IMG_20260523_063733.jpg",
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620944108_logo.png",
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620947130_701436186_1656466062281832_8531394110492575815_n.jpg",
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620949014_680273294_1515965150132402_603842027990643943_n.jpg"
+    ]
   },
   {
     "id": 4,
