@@ -4,7 +4,9 @@
     "titre": "fdsf",
     "date": "fd",
     "description": "dsfdsf",
-    "photos": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783405928713_logo.png"
+    "photos": [
+      "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783620879773_IMG_20260523_063716.jpg"
+    ]
   },
   {
     "id": 2,
