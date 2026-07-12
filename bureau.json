@@ -22,5 +22,13 @@
     "telephone": "0348672345",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828230033_1783826246396.jpg",
     "color": "#00ff00"
+  },
+  {
+    "id": 4,
+    "nom": "Haja",
+    "fonction": "Secrétaire ",
+    "telephone": "0348672345",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828259654_1783826333493.jpg",
+    "color": "#ff0000"
   }
 ]
