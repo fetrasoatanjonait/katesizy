@@ -14,5 +14,13 @@
     "telephone": "0348672345",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828164095_1783271717379.jpg",
     "color": "#0000ff"
+  },
+  {
+    "id": 3,
+    "nom": "Sarobidy ",
+    "fonction": "3e Responsable ",
+    "telephone": "0348672345",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828230033_1783826246396.jpg",
+    "color": "#00ff00"
   }
 ]
