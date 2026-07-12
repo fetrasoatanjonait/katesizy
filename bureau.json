@@ -26,9 +26,17 @@
   {
     "id": 4,
     "nom": "Haja",
-    "fonction": "Secrétaire ",
+    "fonction": "SecrÃ©taire ",
     "telephone": "0348672345",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828259654_1783826333493.jpg",
     "color": "#ff0000"
+  },
+  {
+    "id": 5,
+    "nom": "Mamitiana ",
+    "fonction": "Secrétaire ",
+    "telephone": "0348672345",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828285483_1783826363281.jpg",
+    "color": "#5b0e2d"
   }
 ]
