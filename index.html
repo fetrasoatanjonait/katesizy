@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SE.FA.DA | EKAR Antsobolo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <!-- Animations de pointe -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #5B0E2D;
+            --accent-color: #C5A059;
+            --accent-hover: #AB8540;
+            --bg-light: #fdfbf7;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+        }
+
+        [data-bs-theme="dark"] {
+            --primary-color: #8C1C47;
+            --accent-color: #D9B46F;
+            --accent-hover: #C5A059;
+            --bg-light: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* --- MENU GLASSMORPHISM MODERNE --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            transition: all 0.4s ease;
+        }
+        [data-bs-theme="dark"] .navbar {
+            background: rgba(30, 30, 30, 0.8) !important;
+        }
+        .navbar.scrolled {
+            background: var(--primary-color) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .navbar.scrolled .navbar-brand,
+        .navbar.scrolled .nav-link {
+            color: #ffffff !important;
+        }
+        .navbar.scrolled .navbar-brand-logo {
+            background: #ffffff;
+            color: var(--primary-color);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar-brand-logo {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-color);
+            color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .nav-link {
+            color: var(--text-main) !important;
+            font-weight: 500;
+            margin-left: 15px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        /* --- HERO DYNAMIQUE AVEC PARALLAX ET VAGUE SVG --- */
+        .hero-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero {
+            min-height: 85vh;
+            background: linear-gradient(rgba(91, 14, 45, 0.80), rgba(91, 14, 45, 0.85)),
+                        url("https://images.unsplash.com/photo-1514894786527-53e3cbe02e31?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 80px 0 140px 0;
+            display: flex;
+            align-items: center;
+            animation: heroZoom 20s infinite alternate;
+        }
+        @keyframes heroZoom {
+            0% { background-size: 100%; }
+            100% { background-size: 110%; }
+        }
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .hero-wave svg {
+            position: relative;
+            display: block;
+            width: calc(130% + 1.3px);
+            height: 70px;
+        }
+        .hero-wave .shape-fill {
+            fill: var(--bg-light);
+        }
+
+        .badge-patron {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero p.lead-text {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .charisme-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+        .charisme-box h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .charisme-box p {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.85;
+            margin-bottom: 0;
+        }
+        .btn-or {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #333;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 10px 24px;
+            transition: all 0.3s ease;
+        }
+        .btn-or:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: white;
+            transform: scale(1.05);
+        }
+        .btn-blanc {
+            background-color: white;
+            border-color: white;
+            color: #5B0E2D;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 10px 24px;
+            transition: all 0.3s ease;
+        }
+        .btn-blanc:hover {
+            background-color: #f8f9fa;
+            color: #5B0E2D;
+            transform: scale(1.05);
+        }
+
+        /* --- CARTES DE STATISTIQUES --- */
+        .stat-section {
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-bottom: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: bold;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        /* --- CARTES ET EFFETS HOVER --- */
+        .card {
+            border: none;
+            border-radius: 25px !important;
+            box-shadow: 0 5px 20px rgba(91, 14, 45, 0.05);
+            transition: cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s;
+            background: var(--card-bg);
+            color: var(--text-main);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .card:hover::before {
+            left: 100%;
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 35px rgba(91, 14, 45, 0.15);
+        }
+
+        /* --- MICRO-INTERACTIONS SUR LES CARTES --- */
+        .teacher-card, .event-card, .sacrement-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .teacher-card:hover, .event-card:hover, .sacrement-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(91, 14, 45, 0.2);
+        }
+        .teacher-card:hover .teacher-photo,
+        .event-card:hover .event-image,
+        .sacrement-card:hover img {
+            transform: scale(1.1);
+            transition: transform 0.4s ease;
+        }
+        .teacher-card .teacher-photo,
+        .event-card .event-image,
+        .sacrement-card img {
+            transition: transform 0.4s ease;
+        }
+
+        /* --- LAZY LOADING --- */
+        img[loading="lazy"] {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .btn-primary, .btn-outline-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+        }
+        .btn-primary:hover, .btn-outline-primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: white;
+        }
+        footer {
+            background: #1A030D;
+            color: #f5eee7;
+            padding: 60px 0 20px 0;
+            margin-top: 70px;
+        }
+        footer h4 {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* --- CONTENEURS DÉFILEMENT HORIZONTAL --- */
+        .scroll-horizontal-custom {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 15px 5px 25px 5px;
+            scroll-behavior: smooth;
+            gap: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .scroll-horizontal-custom::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scroll-horizontal-custom::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .scroll-horizontal-custom::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+        .scroll-horizontal-custom::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        .scroll-item-custom {
+            flex: 0 0 auto;
+            width: 320px;
+        }
+
+        /* --- STYLES MENU COURS --- */
+        .nav-pills-custom .nav-link {
+            color: var(--primary-color);
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        .nav-pills-custom .nav-link.active {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            border-color: var(--primary-color);
+        }
+        .course-list-item {
+            background: var(--card-bg);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .course-list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(91, 14, 45, 0.08);
+        }
+        .course-number {
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* --- STYLES ENSEIGNANTS OPTIMISÉS --- */
+        .badge-service {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: #333;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            z-index: 2;
+        }
+        .teacher-meta-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .teacher-meta-icons a {
+            color: var(--primary-color);
+            transition: color 0.2s;
+        }
+        .teacher-meta-icons a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- SECTION BUREAU GÉOMÉTRIQUE AVANCÉE --- */
+        .bureau-section {
+            padding: 80px 0;
+            background: rgba(197, 160, 89, 0.1);
+        }
+        .bureau-layout {
+            position: relative;
+            max-width: 850px;
+            height: 700px;
+            margin: 0 auto;
+        }
+        .bureau-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        .bureau-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(91, 14, 45, 0.3);
+            border: 8px solid var(--bg-light);
+        }
+        
+        #bureauContainer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .member-card {
+            position: absolute;
+            width: 220px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: .4s;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+            border-width: 4px;
+            border-style: solid;
+            z-index: 1;
+        }
+        .member-card:hover {
+            transform: translateY(-10px) !important;
+            z-index: 5;
+        }
+        .member-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-light);
+            margin-bottom: 15px;
+        }
+        .badge-role {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(197, 160, 89, 0.15);
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        .member-number {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: 4px solid var(--card-bg);
+        }
+
+        /* Positions orbitales précises fixes */
+        #bureauContainer .member-card:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+        #bureauContainer .member-card:nth-child(2) { top: 105px; right: 40px; }
+        #bureauContainer .member-card:nth-child(3) { top: 350px; right: 0px; }
+        #bureauContainer .member-card:nth-child(4) { bottom: 0; right: 190px; }
+        #bureauContainer .member-card:nth-child(5) { bottom: 0; left: 190px; }
+        #bureauContainer .member-card:nth-child(6) { top: 350px; left: 0px; }
+        #bureauContainer .member-card:nth-child(7) { top: 105px; left: 40px; }
+
+        /* Cartes modulaires */
+        .teacher-card, .event-card, .sacrement-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,.04);
+            transition: .4s;
+            height: 100%;
+            position: relative;
+        }
+        
+        .teacher-photo { height: 240px; object-fit: cover; width: 100%; }
+        .event-image, .sacrement-card img { width: 100%; height: 200px; object-fit: cover; }
+        
+        .teacher-body, .event-body, .sacrement-body { padding: 25px; }
+        
+        .teacher-name { font-size: 20px; font-weight: bold; color: var(--primary-color); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .teacher-class {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #333;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin: 8px 0;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .teacher-info { margin: 6px 0; color: var(--text-main); opacity: 0.8; font-size: 13px; }
+        .teacher-info i { color: var(--primary-color); width: 25px; }
+        .event-date, .sacrement-date { color: var(--accent-color); font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+        
+        /* TIMELINE DESIGN CHIC */
+        .timeline {
+            position: relative;
+            margin: auto;
+            max-width: 900px;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-color);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px;
+        }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        
+        .timeline-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,.05);
+        }
+        .timeline-date { font-weight: bold; color: var(--accent-color); margin-bottom: 10px; }
+        
+        .bg-light-custom { background-color: rgba(197, 160, 89, 0.05); }
+        .table-primary { --bs-table-bg: var(--primary-color); --bs-table-color: white; }
+        .blockquote { border-left: 4px solid var(--accent-color); padding-left: 15px; }
+
+        /* --- BOUTONS UTILITIES FLOTTANTS --- */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .scroll-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top-btn:hover {
+            background: var(--accent-color);
+            color: #333;
+            transform: scale(1.1);
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 170px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        /* --- LOADER DE CHARGEMENT --- */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        [data-bs-theme="dark"] .loader-overlay {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        .loader-content {
+            text-align: center;
+        }
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--accent-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loader-text {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Media Queries pour la flexibilité sur mobile */
+        @media(max-width:992px) { 
+            .bureau-layout { 
+                height: auto; 
+                display: flex; 
+                flex-direction: column; 
+                gap: 20px; 
+                align-items: center; 
+            }
+            .bureau-center { 
+                position: static; 
+                transform: none; 
+                margin: 20px 0 40px 0; 
+            }
+            #bureauContainer {
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 25px;
+            }
+            .member-card { 
+                position: static !important; 
+                transform: none !important; 
+                width: 100%; 
+                max-width: 280px; 
+            }
+            .member-number { top: -20px; }
+        }
+        @media(max-width:768px) {
+            .timeline::before { left: 15px; }
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 45px;
+            }
+            .hero h1 { font-size: 34px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER DE CHARGEMENT -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Chargement...</div>
+        </div>
+    </div>
+
+    <!-- BOUTONS FLOTTANTS (ERGONOMIE ACCESSIBLE) -->
+    <button class="theme-toggle-btn" id="themeToggle" aria-label="Changer de thème clair/sombre" type="button">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    </button>
+    <a href="https://wa.me/261340000000" class="whatsapp-float" target="_blank" aria-label="Contact via WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Retour en haut de la page" type="button">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- NAVBAR TRANSPARENTE ET FLUIDE -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeInLeft" href="#" aria-label="Retour à l'accueil - Catéchisme EKAR Antsobolo">
+                <div class="navbar-brand-logo" aria-hidden="true"><i class="fa fa-cross"></i></div>
+              <b style="color: #e89b0d;">  SE.FA.DA</b> EKAR Antsobolo
+            </a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Ouvrir le menu de navigation" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto text-end">
+                    <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#apropos">Qui sommes-nous</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bureau">Bureau</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#enseignants">Enseignants</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#evenements">Événements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sacrements">Sacrements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#programme">Programme</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#actualites">Actualités</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dons">Dons</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- EN-TÊTE DYNAMIQUE AVEC PARALLAX ET COURBES DESIGN -->
+    <div class="hero-wrapper">
+        <section class="hero" id="accueil">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7 text-start animate__animated animate__fadeInLeft">
+                        <div class="badge-patron">Saint gardien : Md Paul</div>
+                        <h1><span style="color: #AB8540;">SE.FA.DA</span><br>Catéchisme catholique de l'EKAR Antsobolo</h1>
+                        <p class="lead-text">Bienvenue sur le site officiel du catéchisme catholique de l'EKAR Antsobolo.</p>
+                        <div class="d-flex gap-3 flex-wrap mb-4">
+                            <a href="#actualites" class="btn btn-or shadow" aria-label="Voir les actualités du catéchisme">Voir les actualités</a>
+                            <a href="#dons" class="btn btn-blanc shadow" aria-label="Faire un don au catéchisme">Faire un don</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 animate__animated animate__zoomIn animate__delay-1s">
+                        <div class="charisme-box text-start shadow-lg">
+                            <h3>Charisme de Saint Paul</h3>
+                            <p>
+                                Saint Paul nous invite à annoncer Jésus-Christ avec courage, fidélité et amour. Son charisme rappelle la mission d'évangéliser, de former la foi, de servir l'Église et de vivre l'unité fraternelle.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="hero-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- CHIFFRES CLÉS / COMPTEURS STATS ANIMÉS -->
+    <section class="container stat-section">
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-chalkboard-user"></i></div>
+                    <div class="stat-number" data-target="35">0</div>
+                    <div class="small text-muted">Catéchistes</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-children"></i></div>
+                    <div class="stat-number" data-target="420">0</div>
+                    <div class="small text-muted">Enfants</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-book-open"></i></div>
+                    <div class="stat-number" data-target="25">0</div>
+                    <div class="small text-muted">Rencontres</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-church"></i></div>
+                    <div class="stat-number" data-target="1998">0</div>
+                    <div class="small text-muted">Depuis</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ÉDIFICATION / CITATION SAINT PAUL -->
+    
+
+    <!-- IDENTITÉ / QUI SOMMES NOUS -->
+    <section id="apropos" class="container mt-4 py-4 overflow-hidden">
+        <div class="d-flex justify-content-between align-items-baseline mb-4" data-aos="fade-up">
+            <h2 class="text-start" style="color: var(--primary-color); font-weight: bold;">Qui sommes-nous ?</h2>
+            <small class="text-muted">Notre identité, notre mission et notre vocation.</small>
+        </div>
+        <div class="container mt-5 py-5 overflow-hidden">
+        <h2 class="section-title" data-aos="fade-up">Notre Saint Patron : Saint Paul</h2>
+        <div class="row align-items-center">
+            <div class="col-lg-5 text-center mb-4 mb-lg-0" data-aos="fade-right">
+                <img src="https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/sefada_assets/paoly.png" class="img-fluid rounded shadow" alt="Saint Paul" style="max-height: 500px; object-fit: contain; border: 3px solid var(--accent-color);" loading="lazy">
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <h3>L'Héritage Spirituel de Md Paul</h3>
+                <p>
+                    Après sa rencontre bouleversante avec le Christ, Saint Paul consacra toute son existence à parcourir le monde pour fonder des communautés et édifier les premiers chrétiens. Son audace et sa persévérance restent le socle sur lequel repose notre engagement pédagogique et spirituel auprès de vos enfants.
+                </p>
+                <blockquote class="blockquote mt-3">
+                    <p class="mb-1">"Ce n'est plus moi qui vis, c'est le Christ qui vit en moi."</p>
+                    <footer class="blockquote-footer mt-2">Galates 2:20</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+        <div class="row g-4">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="p-4 rounded shadow-sm h-100" style="border-top: 4px solid var(--primary-color); background-color: var(--card-bg) !important;">
+                    <h3>Notre Mission</h3>
+                    <p class="text-muted">
+                        Le Catéchisme Catholique de l'EKAR Antsobolo accompagne les enfants, les jeunes et les adultes dans la découverte de la foi catholique.
+                        Notre mission est de transmettre la Parole de Dieu, préparer aux sacrements et former des disciples du Christ.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="p-4 rounded shadow-sm h-100" style="border-top: 4px solid var(--accent-color); background-color: var(--card-bg) !important;">
+                    <h3>Notre Vocation</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent"><i class="fa fa-check text-success me-2"></i>Annoncer l'Évangile</li>
+                        <li class="list-group-item bg-transparent"><i class="fa fa-check text-success me-2"></i>Préparer aux Sacrements</li>
+                        <li class="list-group-item bg-transparent"><i class="fa fa-check text-success me-2"></i>Former les jeunes</li>
+                        <li class="list-group-item bg-transparent"><i class="fa fa-check text-success me-2"></i>Servir l'Église</li>
+                        <li class="list-group-item bg-transparent"><i class="fa fa-check text-success me-2"></i>Vivre la Charité</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMBRES DU BUREAU -->
+    <section id="bureau" class="bureau-section mt-5 overflow-hidden">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
+                <div>
+                    <h2 class="section-title mb-1" style="text-align: left; padding-bottom: 0;">Membres du bureau</h2>
+                    <p class="text-muted mt-2"><strong>Objectif :</strong> Structurer l'administration, coordonner l'équipe pédagogique et veiller au bon déroulement pastoral de l'année de foi.</p>
+                </div>
+                <p class="text-muted mb-0 d-none d-md-block">Les responsables du catéchisme.</p>
+            </div>
+            
+            <div class="bureau-layout" data-aos="zoom-in">
+                <div class="bureau-center">
+                    <div class="bureau-circle">
+                        <h4 class="mb-0 font-weight-bold">BUREAU</h4>
+                        <small class="mb-0">Catéchisme EKAR</small>
+                        <small class="mb-0">Antsobolo</small>
+                    </div>
+                </div>
+                <div id="bureauContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENSEIGNANTS / COMPOSANT RECHERCHE INTÉGRÉE -->
+    <section id="enseignants" class="py-5 bg-light-custom overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Nos Enseignants</h2>
+            <p class="text-center text-muted mb-3" data-aos="fade-up"><strong>Objectif :</strong> Transmettre fidèlement la Parole divine, guider avec compassion et servir de modèles spirituels de vie ecclésiale pour chaque étape de croissance.</p>
+            <p class="text-center text-muted mb-4" data-aos="fade-up">Les catéchistes qui accompagnent les enfants dans leur cheminement de foi.</p>
+            
+            <div class="row justify-content-center mb-4" data-aos="fade-up">
+                <div class="col-lg-5">
+                    <div class="input-group shadow-sm">
+                        <label class="input-group-text bg-white border-end-0" for="searchTeacher"><i class="fa fa-search text-muted" aria-hidden="true"></i><span class="visually-hidden">Rechercher</span></label>
+                        <input type="text" class="form-control border-start-0" id="searchTeacher" placeholder="Rechercher un enseignant, classe, mot clé..." aria-label="Rechercher un enseignant, une classe ou un mot clé">
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-horizontal-custom" id="enseignantsContainer" data-aos="fade-left"></div>
+        </div>
+    </section>
+
+    <!-- ÉVÉNEMENTS / GALERIES IMMERSIVES -->
+    <section id="evenements" class="py-5 overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Nos Événements</h2>
+            <p class="text-center text-muted mb-3" data-aos="fade-up"><strong>Objectif :</strong> Fortifier l'esprit d'unité communautaire et ancrer la foi théorique dans des expériences vivantes, des recollections et des célébrations mémorables.</p>
+            <p class="text-center text-muted mb-4" data-aos="fade-up">Découvrez les activités organisées par le Catéchisme EKAR Antsobolo.</p>
+            <div class="scroll-horizontal-custom" id="evenementsContainer" data-aos="fade-right"></div>
+        </div>
+    </section>
+
+    <!-- SACREMENTS -->
+    <section id="sacrements" class="py-5 bg-light-custom overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Les Sacrements</h2>
+            <p class="text-center text-muted mb-3" data-aos="fade-up"><strong>Objectif :</strong> Préparer spirituellement et doctrinalement les catéchumènes à recevoir les canaux sacrés de la grâce divine, consolidant leur union intime avec le Christ.</p>
+            <p class="text-center text-muted mb-4" data-aos="fade-up">Les sacrements sont les signes visibles de la grâce de Dieu qui accompagnent la vie du chrétien.</p>
+
+            <div class="d-flex justify-content-center mb-4 flex-wrap gap-2" data-aos="fade-up">
+                <button class="btn btn-outline-primary filter-btn active" data-category="all">Tous</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Intégration">Intégration</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Baptême">Baptême</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Confession">Confession</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="1ère Communion">1ère Communion</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Renouvellement">Renouvellement</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Confirmation">Confirmation</button>
+                <button class="btn btn-outline-primary filter-btn" data-category="Mariage">Mariage</button>
+            </div>
+
+            <div class="scroll-horizontal-custom" id="sacrementsContainer" data-aos="fade-left"></div>
+        </div>
+    </section>
+
+    <!-- PROGRAMME ET ENRICHISSEMENTS PÉDAGOGIQUES -->
+    <section id="programme" class="py-5 overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Programme des Rencontres & Cours</h2>
+            <p class="text-center text-muted mb-4" data-aos="fade-up">Retrouvez la liste globale de nos rencontres et téléchargez les supports de cours au format PDF.</p>
+            
+            <div class="d-flex justify-content-center mb-4" data-aos="fade-up">
+                <div class="nav nav-pills nav-pills-custom" id="courseTabs" role="tablist">
+                    <button class="nav-link active" id="tab-1-8" data-bs-toggle="pill" data-bs-target="#pane-1-8" type="button" role="tab">Rencontres 1 à 8</button>
+                    <button class="nav-link" id="tab-9-18" data-bs-toggle="pill" data-bs-target="#pane-9-18" type="button" role="tab">Rencontres 9 à 18</button>
+                    <button class="nav-link" id="tab-19-25" data-bs-toggle="pill" data-bs-target="#pane-19-25" type="button" role="tab">Rencontres 19 à 25</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="courseTabsContent" data-aos="zoom-in">
+                <div class="tab-pane fade show active" id="pane-1-8" role="tabpanel">
+                    <div class="row" id="container-1-8"></div>
+                </div>
+                <div class="tab-pane fade" id="pane-9-18" role="tabpanel">
+                    <div class="row" id="container-9-18"></div>
+                </div>
+                <div class="tab-pane fade" id="pane-19-25" role="tabpanel">
+                    <div class="row" id="container-19-25"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTUALITÉS / FIL DU TEMPS CHRONOLOGIQUE -->
+    <section id="actualites" class="py-5 bg-light-custom overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Actualités</h2>
+            <p class="text-center text-muted mb-5" data-aos="fade-up">Toutes les informations concernant les classes de catéchisme.</p>
+            <div class="timeline" id="actualitesContainer" data-aos="zoom-in"></div>
+        </div>
+    </section>
+
+    <!-- SUIVI ET JAUGE DES DONS -->
+    <section id="dons" class="py-5 overflow-hidden">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Dons</h2>
+            <p class="text-center text-muted mb-5" data-aos="fade-up">Merci à tous les bienfaiteurs qui soutiennent la mission du Catéchisme.</p>
+            <div class="row text-center g-3" data-aos="fade-up">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card p-4">
+                        <h5 class="text-muted">Total Collecté</h5>
+                        <h2 id="totalDons" style="color: var(--primary-color);">0 Ar</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card p-4">
+                        <h5 class="text-muted">Moyenne</h5>
+                        <h2 id="moyenneDons" style="color: var(--primary-color);">0 Ar</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card p-4">
+                        <h5 class="text-muted">Donateurs</h5>
+                        <h2 id="nombreDonateurs" style="color: var(--primary-color);">0</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card p-4">
+                        <h5 class="text-muted">Objectif Cible</h5>
+                        <h2 style="color: var(--accent-color);">3 000 000 Ar</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5" data-aos="fade-up" data-aos-delay="100">
+                <div class="d-flex justify-content-between mb-2 font-weight-bold">
+                    <span id="progressionTexte">0 / 3 000 000 Ar</span>
+                    <span id="progressionPourcentage">0%</span>
+                </div>
+                <div class="progress rounded-pill shadow-sm" style="height:30px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressDon" style="width:0%; background-color: var(--primary-color); font-weight: bold; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);">0%</div>
+                </div>
+            </div>
+            
+            <div class="table-responsive mt-5 rounded shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Date</th>
+                            <th>Donateur</th>
+                            <th>Montant</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeDons" class="bg-white"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIED DE PAGE RICHE AVEC CARTE ET LIENS -->
+    <footer>
+        <div class="container">
+            <div class="row text-start g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4>Catéchisme Catholique</h4>
+                    <p class="mb-2">EKAR Antsobolo</p>
+                    <p class="mb-1"><i class="fa fa-location-dot me-2" style="color: var(--accent-color);"></i> Antsobolo, Antananarivo</p>
+                    <p class="mb-1"><i class="fa fa-phone me-2" style="color: var(--accent-color);"></i> +261 XX XX XXX XX</p>
+                    <p class="mb-1"><i class="fa fa-envelope me-2" style="color: var(--accent-color);"></i> catechisme@ekar.mg</p>
+                    <p class="mb-1"><i class="fa fa-clock me-2" style="color: var(--accent-color);"></i> Samedi : 14h - 16h | Dimanche : 8h - 10h</p>
+                </div>
+                <div class="col-lg-2 mb-4 mb-lg-0">
+                    <h4>Liens rapides</h4>
+                    <p class="mb-1"><a href="#bureau" class="text-white text-decoration-none opacity-75">Bureau</a></p>
+                    <p class="mb-1"><a href="#enseignants" class="text-white text-decoration-none opacity-75">Enseignants</a></p>
+                    <p class="mb-1"><a href="#evenements" class="text-white text-decoration-none opacity-75">Événements</a></p>
+                    <p class="mb-1"><a href="#sacrements" class="text-white text-decoration-none opacity-75">Sacrements</a></p>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Suivez-nous</h4>
+                    <div class="mb-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-youtube fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Localisation</h4>
+                    <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm" style="border: 2px solid var(--accent-color);">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.22341234!2d47.550000!3d-18.910000!2m3!1f0!2f0!3f0!3m2!1i1020!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDU0JzM2LjAiUyA0N8KwMzMnMDAuMCJF!5e0!3m2!1sfr!2smg!4v1700000000000!5m2!1sfr!2smg" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr style="background-color: var(--accent-color);">
+            <div class="text-center small opacity-75">
+                © 2026 Catéchisme Catholique EKAR Antsobolo - Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOÎTES MODALES (POP-UPS INTERACTIVES) -->
+    <div class="modal fade" id="teacherModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header" style="background: var(--primary-color); color: white;">
+                    <h5 class="modal-title">Détails de l'enseignant</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="teacherDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header" style="background: var(--primary-color); color: white;">
+                    <h5 class="modal-title">Événement</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="eventDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sacrementModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header" style="background: var(--primary-color); color: white;">
+                    <h5 class="modal-title">Détails du sacrement</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="sacrementDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CODE SCRIPT LOGIQUE & ANIMATIONS INTERACTIVES -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialisation de la bibliothèque d'animation au défilement
+        AOS.init({
+            duration: 1000,
+            once: false
+        });
+
+        // --- COMMUTATION INTÉLLIGENTE DU DARK MODE ---
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-bs-theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        });
+
+        // --- SCROLL ANIMATIONS (BARRE DE NAVIGATION & RETOUR EN HAUT) ---
+        const navbar = document.querySelector('.navbar');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- LAZY LOADING DES IMAGES ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.onload = () => img.classList.add('loaded');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(img => {
+                    img.onload = () => img.classList.add('loaded');
+                    imageObserver.observe(img);
+                });
+            } else {
+                // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
+                lazyImages.forEach(img => {
+                    img.onload = () => img.classList.add('loaded');
+                });
+            }
+        });
+
+        // --- EFFET DE COMPTEUR CHRONO ANIMÉ SUR LES CHIFFRES CLES ---
+        function runCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const speed = 100; // Vitesse de l'incrémentation
+                const increment = target / speed;
+
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // --- ENSEMBLE DES COURS AVEC CONTENUS FILTRÉS ---
+        const listeCoursStatiques = [
+            { id: 1, titre: "Découvrir Dieu", groupe: "1-8", desc: "Introduction à la nature aimante du Père Créateur à travers l'univers.", niveau: "CE2", duree: "1h30" },
+            { id: 2, titre: "L'homme et la femme, des merveilles !", groupe: "1-8", desc: "Comprendre la dignité unique de l'être humain créé à l'image divine.", niveau: "CE2", duree: "1h30" },
+            { id: 3, titre: "Comme Abraham, marcher avec Dieu", groupe: "1-8", desc: "Étude du père des croyants et de l'importance de la confiance aveugle en Sa parole.", niveau: "CE2", duree: "1h45" },
+            { id: 4, titre: "Être saint à la suite de Moïse", groupe: "1-8", desc: "Le chemin de la liberté, de la Loi sainte et des Commandements de vie.", niveau: "CE2", duree: "1h30" },
+            { id: 5, titre: "La prière", groupe: "1-8", desc: "Développement d'un dialogue intime, régulier et sincère avec le Seigneur.", niveau: "CE2", duree: "1h15" },
+            { id: 6, titre: "David et Goliath", groupe: "1-8", desc: "Leçon de courage spirituel prouvant que la foi surpasse la force physique.", niveau: "CE2", duree: "1h30" },
+            { id: 7, titre: "L'Avent : l'attente de la naissance de Jésus", groupe: "1-8", desc: "Temps liturgique de préparation intérieure aux mystères de l'Incarnation.", niveau: "Général", duree: "2h00" },
+            { id: 8, titre: "Le prophète Jean-Baptiste", groupe: "1-8", desc: "La voix qui crie dans le désert pour aplanir les chemins du Messie.", niveau: "CM1", duree: "1h30" },
+            
+            { id: 9, titre: "Noël : la naissance du fils de Dieu", groupe: "9-18", desc: "Célébration de la lumière divine venue habiter au milieu des hommes.", niveau: "Général", duree: "2h00" },
+            { id: 10, titre: "La Sainte Famille", groupe: "9-18", desc: "Modèle de vertus, d'obéissance et d'amour au foyer de Nazareth.", niveau: "CM1", duree: "1h30" },
+            { id: 11, titre: "Le baptême", groupe: "9-18", desc: "Sacrement de la nouvelle naissance purificatrice faisant de nous des fils adoptifs.", niveau: "CM1", duree: "1h45" },
+            { id: 12, titre: "Jésus appelle les apôtres", groupe: "9-18", desc: "L'appel universel à suivre le Christ et à devenir pêcheurs d'hommes.", niveau: "CM1", duree: "1h30" },
+            { id: 13, titre: "Jésus guérit Bartimée", groupe: "9-18", desc: "Symbole de la guérison de l'aveuglement spirituel par la force de la foi.", niveau: "CM1", duree: "1h30" },
+            { id: 14, titre: "Bâtir sa vie sur le roc", groupe: "9-18", desc: "L'importance de fonder ses choix quotidiens sur les enseignements évangéliques.", niveau: "CM2", duree: "1h30" },
+            { id: 15, titre: "Le Carême, chemin vers Pâques", groupe: "9-18", desc: "Quarante jours de conversion par le jeûne, le partage et la prière fervente.", niveau: "Général", duree: "2h00" },
+            { id: 16, titre: "Grandir dans l'amour", groupe: "9-18", desc: "Application du grand commandement de la charité fraternelle au quotidien.", niveau: "CM2", duree: "1h30" },
+            { id: 17, titre: "La fête des Rameaux", groupe: "9-18", desc: "Entrée triomphale du Roi humble qui s'avance vers le don suprême.", niveau: "Général", duree: "1h30" },
+            { id: 18, titre: "Du Jeudi saint à Pâques", groupe: "9-18", desc: "Le Triduum Pascal : de la Cène eucharistique à la victoire absolue sur la mort.", niveau: "Général", duree: "2h30" },
+            
+            { id: 19, titre: "Jésus est ressuscité", groupe: "19-25", desc: "Le fondement ultime de notre foi : la vie éternelle proclamée glorieusement.", niveau: "Général", duree: "1h45" },
+            { id: 20, titre: "Jésus, présent avec nous pour toujours", groupe: "19-25", desc: "Découverte de sa présence vivante au cœur des sacrements et de l'Église.", niveau: "CM2", duree: "1h30" },
+            { id: 21, titre: "L'Ascension de Jésus", groupe: "19-25", desc: "Le Christ s'élève au Ciel pour nous préparer une place et nous envoyer en mission.", niveau: "CM2", duree: "1h30" },
+            { id: 22, titre: "La Pentecôte : don de l'Esprit Saint", groupe: "19-25", desc: "La venue du Défenseur pour guider, fortifier et embraser les apôtres.", niveau: "CM2", duree: "1h45" },
+            { id: 23, titre: "Marie, notre maman du ciel", groupe: "19-25", desc: "Vénération de la Vierge Mère, notre intercesseur et modèle parfait de fidélité.", niveau: "Général", duree: "1h30" },
+            { id: 24, titre: "La Bible, parole de Dieu", groupe: "19-25", desc: "Comprendre l'écriture sainte inspirée comme guide vivant pour l'âme.", niveau: "CM2", duree: "1h30" },
+            { id: 25, titre: "L'Eglise, notre famille", groupe: "19-25", desc: "Vivre le mystère du Corps mystique du Christ unis par une même foi.", niveau: "Général", duree: "2h00" }
+        ];
+
+        // CONFIGURATION DU REPO DE TRANSCRIPTION GÉRÉ PAR L'API
+        const config = {
+            token: "ghp_"+"mSQCh8UYW5v7ggHV1ZDo62NSstG0Qd4XorDM",
+            repo: "fetrasoatanjonait/katesizy"
+        };
+
+        let listeEnseignants = [];
+        let listeEvenements = [];
+        let listeSacrements = [];
+
+        async function lireJSON(fichier) {
+            try {
+                const url = `https://api.github.com/repos/${config.repo}/contents/${encodeURIComponent(fichier)}.json`;
+                const res = await fetch(url, {
+                    headers: { Authorization: `token ${config.token}` }
+                });
+                if (!res.ok) return [];
+                const data = await res.json();
+                return JSON.parse(atob(data.content.replace(/\s/g, '')));
+            } catch (err) {
+                console.error(`Erreur lors de la lecture de ${fichier}:`, err);
+                return [];
+            }
+        }
+
+        // --- CORRESPONDANCE DYNAMIQUE ET CONSTITUTION DU BLOC DES COURS ---
+        function genererCoursStatiques() {
+            const container1_8 = document.getElementById("container-1-8");
+            const container9_18 = document.getElementById("container-9-18");
+            const container19_25 = document.getElementById("container-19-25");
+
+            if (!container1_8 || !container9_18 || !container19_25) return;
+
+            let html1_8 = "", html9_18 = "", html19_25 = "";
+
+            listeCoursStatiques.forEach(c => {
+                const itemHTML = `
+                    <div class="col-md-6 mb-3">
+                        <div class="course-list-item d-flex flex-column p-3">
+                            <div class="d-flex align-items-start gap-3 w-100 mb-2">
+                                <div class="course-number mt-1">${c.id}</div>
+                                <div class="w-100">
+                                    <div class="fw-bold text-dark mb-1 d-flex justify-content-between flex-wrap">
+                                        <span class="text-main-theme">Rencontre ${c.id} : ${c.titre}</span>
+                                        <span class="badge bg-secondary opacity-75 font-size-11">${c.niveau}</span>
+                                    </div>
+                                    <div class="small text-muted mb-2" style="line-height: 1.3;">${c.desc}</div>
+                                    <div class="d-flex gap-3 small text-muted font-weight-bold">
+                                        <span><i class="fa-regular fa-clock me-1"></i>${c.duree}</span>
+                                        <span class="text-success"><i class="fa-solid fa-circle-play me-1"></i>Vidéo Incluse</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 justify-content-end w-100 mt-2">
+                                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="alert('La vidéo sera bientôt disponible.')"><i class="fa fa-play me-1"></i> Vidéo</button>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="alert('Le PDF sera bientôt disponible.')"><i class="fa fa-file-pdf me-1"></i> PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (c.groupe === "1-8") html1_8 += itemHTML;
+                else if (c.groupe === "9-18") html9_18 += itemHTML;
+                else if (c.groupe === "19-25") html19_25 += itemHTML;
+            });
+
+            container1_8.innerHTML = html1_8;
+            container9_18.innerHTML = html9_18;
+            container19_25.innerHTML = html19_25;
+        }
+
+        async function charger() {
+            // Afficher le loader
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.remove('hidden');
+            }
+
+            try {
+                genererCoursStatiques();
+                runCounters(); // Lancement des chronomètres statistiques
+
+                const [bureau, enseignants, evenements, sacrements, actualites, dons] = await Promise.all([
+                    lireJSON("bureau"),
+                    lireJSON("enseignants"),
+                    lireJSON("evenements"),
+                    lireJSON("sacrements"),
+                    lireJSON("actualites"),
+                    lireJSON("dons")
+                ]);
+
+                afficherBureau(bureau);
+                // Stockage et affichage initial global de la liste brute
+                listeEnseignants = enseignants;
+                afficherEnseignants(listeEnseignants);
+                afficherEvenements(evenements);
+                afficherSacrements(sacrements);
+                afficherActualites(actualites);
+                afficherDons(dons);
+            } catch (error) {
+                console.error('Erreur lors du chargement des données:', error);
+            } finally {
+                // Masquer le loader
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+            }
+        }
+
+        function afficherBureau(bureau) {
+            const c = document.getElementById("bureauContainer");
+            if (!c) return;
+            
+            c.innerHTML = bureau.map((m, i) => {
+                const memberColor = m.color || '#C5A059';
+                return `
+                    <div class="member-card" style="border-color:${memberColor};">
+                        <div class="member-number" style="background:${memberColor}">${i + 1}</div>
+                        <img src="${m.photo || 'https://via.placeholder.com/90'}" alt="${m.nom}" loading="lazy">
+                        <h5 style="color: var(--primary-color); font-weight: bold;">${m.nom}</h5>
+                        <div class="badge-role" style="color:${memberColor}; border: 1px solid ${memberColor};">${m.fonction}</div>
+                        <p class="mb-0 small text-muted"><i class="fa fa-phone me-2" style="color: var(--accent-color);"></i>${m.telephone || 'Non renseigné'}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function afficherEnseignants(data) {
+            const container = document.getElementById("enseignantsContainer");
+            if (!container) return;
+
+            if(data.length === 0) {
+                container.innerHTML = `<div class="text-center text-muted w-100 py-4">Aucun enseignant trouvé.</div>`;
+                return;
+            }
+
+            container.innerHTML = data.map(e => `
+                <div class="scroll-item-custom">
+                    <div class="teacher-card">
+                        <span class="badge-service">${e.service || '5'} ans de service</span>
+                        <img src="${e.photo || 'https://via.placeholder.com/280'}" class="teacher-photo" alt="${e.nom}" loading="lazy">
+                        <div class="teacher-body">
+                            <div class="text-warning mb-1"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            <div class="teacher-name">${e.nom}</div>
+                            <div class="teacher-class">${e.classe || 'Général'}</div>
+                            <div class="teacher-info"><i class="fa fa-phone"></i>${e.telephone || 'N/A'}</div>
+                            <div class="teacher-info"><i class="fa fa-envelope"></i>${e.email || 'N/A'}</div>
+                            
+                            <div class="teacher-meta-icons">
+                                <a href="tel:${e.telephone}"><i class="fa-solid fa-square-phone"></i></a>
+                                <a href="mailto:${e.email}"><i class="fa-solid fa-square-envelope"></i></a>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 teacher-btn mt-3" onclick="voirEnseignant(${e.id})">Voir le profil complet</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function voirEnseignant(id) {
+            const e = listeEnseignants.find(x => x.id == id);
+            if (!e) return;
+
+            document.getElementById("teacherDetail").innerHTML = `
+                <div class="row">
+                    <div class="col-md-4 mb-3 mb-md-0 text-center">
+                        <img src="${e.photo || 'https://via.placeholder.com/280'}" class="img-fluid rounded shadow-sm" alt="${e.nom}" style="border: 2px solid var(--accent-color); max-height:250px; object-fit:cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <h3 style="color: var(--primary-color);">${e.nom}</h3>
+                        <hr>
+                        <p><b>Classe affectée :</b> ${e.classe || 'N/A'}</p>
+                        <p><b>Téléphone :</b> ${e.telephone || 'N/A'}</p>
+                        <p><b>Email :</b> ${e.email || 'N/A'}</p>
+                        <p><b>Adresse :</b> ${e.adresse || 'N/A'}</p>
+                        <p><b>Profession :</b> ${e.profession || 'Non renseignée'}</p>
+                        <p><b>Expérience Catéchétique :</b> ${e.service || 'Non renseigné'} ans</p>
+                        ${e.citation ? `<p><b>Citation de Foi :</b></p><blockquote class="blockquote font-italic">"${e.citation}"</blockquote>` : ''}
+                    </div>
+                </div>
+            `;
+            const modalElement = document.getElementById("teacherModal");
+            if (modalElement) {
+                modalElement.classList.add('show');
+                modalElement.style.display = 'block';
+                document.body.classList.add('modal-open');
+                const backdrop = document.createElement('div');
+                backdrop.className = 'modal-backdrop fade show';
+                backdrop.id = 'modal-backdrop-teacher';
+                document.body.appendChild(backdrop);
+            }
+        }
+
+        // BARRE DE RECHERCHE FLUIDE ET INSTANTANÉE (ENSEIGNANTS & CLASSES)
+        document.getElementById("searchTeacher")?.addEventListener("input", (e) => {
+            const mot = e.target.value.toLowerCase();
+            const filtre = listeEnseignants.filter(x =>
+                x.nom.toLowerCase().includes(mot) ||
+                (x.classe && x.classe.toLowerCase().includes(mot))
+            );
+            afficherEnseignants(filtre);
+        });
+
+        // FILTRAGE PAR CATÉGORIE DE SACREMENT
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Gestion de l'état actif des boutons
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const category = this.getAttribute('data-category');
+                const filteredData = category === 'all'
+                    ? listeSacrements
+                    : listeSacrements.filter(s => s.categorie === category);
+
+                afficherSacrements(filteredData);
+            });
+        });
+
+        function afficherEvenements(data) {
+            listeEvenements = data;
+            const c = document.getElementById("evenementsContainer");
+            if (!c) return;
+
+            if(data.length === 0) {
+                c.innerHTML = `<div class="text-center text-muted w-100 py-4">Aucun événement enregistré.</div>`;
+                return;
+            }
+
+            c.innerHTML = data.map(e => {
+                let imgUrl = 'https://via.placeholder.com/250';
+                if (e.photos) {
+                    imgUrl = Array.isArray(e.photos) ? (e.photos[0] || imgUrl) : e.photos;
+                }
+                return `
+                    <div class="scroll-item-custom">
+                        <div class="event-card">
+                            <span class="position-absolute top-0 start-0 m-3 badge bg-dark opacity-75"><i class="fa-solid fa-images me-1"></i>Album photo</span>
+                            <img src="${imgUrl}" class="event-image" alt="${e.titre}" loading="lazy">
+                            <div class="event-body">
+                                <h4 style="color: var(--primary-color); font-weight: bold; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${e.titre}</h4>
+                                <div class="event-date"><i class="fa fa-calendar me-2"></i>${e.date}</div>
+                                <div class="event-description text-muted text-truncate">${e.description || ''}</div>
+                                <button class="btn btn-primary mt-3 w-100" onclick="voirEvenement(${e.id})">Ouvrir l'Album / Détails</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function voirEvenement(id) {
+            const e = listeEvenements.find(x => x.id == id);
+            if (!e) return;
+
+            // Gestion des photos multiples pour l'album
+            let photos = [];
+            if (e.photos) {
+                photos = Array.isArray(e.photos) ? e.photos : [e.photos];
+            }
+            if (photos.length === 0) {
+                photos = ['https://via.placeholder.com/250'];
+            }
+
+            // Génération de la grille avec toutes les photos
+            let gridItems = '';
+            photos.forEach((photo, index) => {
+                gridItems += `
+                    <div class="col-6 col-md-4 col-lg-3 mb-3">
+                        <div class="photo-grid-item">
+                            <img src="${photo}" class="img-fluid rounded shadow-sm w-100" style="height: 150px; object-fit: cover; cursor: pointer;" alt="Photo ${index + 1}" onclick="window.open('${photo}', '_blank')">
+                        </div>
+                    </div>`;
+            });
+
+            const gridHtml = `
+                <div class="row mb-4">
+                    ${gridItems}
+                </div>`;
+
+            document.getElementById("eventDetail").innerHTML = `
+                ${gridHtml}
+                <h2 style="color: var(--primary-color);">${e.titre}</h2>
+                <p><b>Date de tenue :</b> ${e.date}</p>
+                <hr>
+                <p>${e.description || 'Aucun détail complémentaire écrit.'}</p>
+            `;
+            const modalElement = document.getElementById("eventModal");
+            if (modalElement) {
+                modalElement.classList.add('show');
+                modalElement.style.display = 'block';
+                document.body.classList.add('modal-open');
+                const backdrop = document.createElement('div');
+                backdrop.className = 'modal-backdrop fade show';
+                backdrop.id = 'modal-backdrop-event';
+                document.body.appendChild(backdrop);
+            }
+        }
+
+        function afficherSacrements(data) {
+            listeSacrements = data;
+            const c = document.getElementById("sacrementsContainer");
+            if (!c) return;
+
+            c.innerHTML = data.map(s => {
+                // Utiliser la première photo de l'album comme image principale
+                let mainPhoto = 'https://via.placeholder.com/260';
+                if (s.photos) {
+                    const photos = Array.isArray(s.photos) ? s.photos : [s.photos];
+                    mainPhoto = photos[0] || mainPhoto;
+                }
+
+                return `
+                <div class="scroll-item-custom">
+                    <div class="sacrement-card">
+                        <img src="${mainPhoto}" alt="${s.nom}" loading="lazy">
+                        <div class="sacrement-body">
+                            <span class="badge bg-secondary mb-2">${s.categorie || 'Général'}</span>
+                            <div class="sacrement-title h5 font-weight-bold" style="color: var(--primary-color);">${s.nom}</div>
+                            <div class="sacrement-date"><i class="fa fa-calendar me-2"></i>${s.date || 'Toute l\'année'}</div>
+                            <div class="sacrement-description text-muted text-truncate">${s.description || ''}</div>
+                            <button class="btn btn-warning text-dark font-weight-bold w-100 mt-3" onclick="voirSacrement(${s.id})">Découvrir les conditions</button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function voirSacrement(id) {
+            const s = listeSacrements.find(x => x.id == id);
+            if (!s) return;
+
+            // Gestion des photos multiples pour l'album
+            let photos = [];
+            if (s.photos) {
+                photos = Array.isArray(s.photos) ? s.photos : [s.photos];
+            }
+            if (photos.length === 0) {
+                photos = ['https://via.placeholder.com/300'];
+            }
+
+            // Génération de la grille avec toutes les photos
+            let gridItems = '';
+            photos.forEach((photo, index) => {
+                gridItems += `
+                    <div class="col-6 col-md-4 col-lg-3 mb-3">
+                        <div class="photo-grid-item">
+                            <img src="${photo}" class="img-fluid rounded shadow-sm w-100" style="height: 150px; object-fit: cover; cursor: pointer; border: 2px solid var(--accent-color);" alt="Photo ${index + 1}" onclick="window.open('${photo}', '_blank')">
+                        </div>
+                    </div>`;
+            });
+
+            const gridHtml = `
+                <div class="row mb-4">
+                    ${gridItems}
+                </div>`;
+
+            document.getElementById("sacrementDetail").innerHTML = `
+                ${gridHtml}
+                <h2 style="color: var(--primary-color);">${s.nom}</h2>
+                <p><b>Catégorie :</b> <span class="badge bg-secondary">${s.categorie || 'Général'}</span></p>
+                <p><b>Période d'administration :</b> ${s.date || 'Toute l\'année'}</p>
+                <hr>
+                <p>${s.description || 'Informations de préparation à venir.'}</p>
+            `;
+            const modalElement = document.getElementById("sacrementModal");
+            if (modalElement) {
+                modalElement.classList.add('show');
+                modalElement.style.display = 'block';
+                document.body.classList.add('modal-open');
+                const backdrop = document.createElement('div');
+                backdrop.className = 'modal-backdrop fade show';
+                backdrop.id = 'modal-backdrop-sacrement';
+                document.body.appendChild(backdrop);
+            }
+        }
+
+        function afficherActualites(data) {
+            const c = document.getElementById("actualitesContainer");
+            if (!c) return;
+
+            if(data.length === 0) {
+                c.innerHTML = `<div class="text-center text-muted py-4">Aucune actualité disponible pour le moment.</div>`;
+                return;
+            }
+
+            c.innerHTML = data.map(a => `
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="timeline-date"><i class="fa fa-calendar me-2"></i>${a.date}</div>
+                        <h4 style="color: var(--primary-color); font-weight: bold;">${a.titre}</h4>
+                        <p class="text-muted">${a.description || ''}</p>
+                        <span class="badge" style="background-color: var(--primary-color);">${a.classe || 'Général'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function afficherDons(data) {
+            const objectif = 3000000;
+            let total = 0;
+            const tbody = document.getElementById("listeDons");
+            if (!tbody) return;
+
+            let rows = "";
+            data.forEach(d => {
+                total += Number(d.montant || 0);
+                rows += `
+                    <tr>
+                        <td>${d.date}</td>
+                        <td><b>${d.nom}</b></td>
+                        <td style="color: var(--primary-color); font-weight: bold;">${Number(d.montant || 0).toLocaleString()} Ar</td>
+                        <td class="text-muted"><em>${d.message || ''}</em></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = rows;
+
+            const moyenne = data.length ? Math.round(total / data.length) : 0;
+
+            document.getElementById("totalDons").innerHTML = total.toLocaleString() + " Ar";
+            document.getElementById("moyenneDons").innerHTML = moyenne.toLocaleString() + " Ar";
+            document.getElementById("nombreDonateurs").innerHTML = data.length;
+
+            const p = Math.min((total / objectif) * 100, 100);
+            const progressDon = document.getElementById("progressDon");
+            
+            document.getElementById("progressionTexte").innerHTML = `<b>${total.toLocaleString()} Ar</b> collectés / ${objectif.toLocaleString()} Ar`;
+            document.getElementById("progressionPourcentage").innerHTML = `<b>${Math.round(p)}%</b>`;
+
+            if (progressDon) {
+                setTimeout(() => {
+                    progressDon.style.width = p + "%";
+                    progressDon.innerHTML = Math.round(p) >= 70 ? Math.round(p) + "% - 🎉 Merci !" : Math.round(p) + "%";
+                }, 500);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', charger);
+
+        // Fonction pour fermer les modals
+        function closeModal(modalId, backdropId) {
+            const modalElement = document.getElementById(modalId);
+            const backdropElement = document.getElementById(backdropId);
+            if (modalElement) {
+                modalElement.classList.remove('show');
+                modalElement.style.display = 'none';
+            }
+            if (backdropElement) {
+                backdropElement.remove();
+            }
+            document.body.classList.remove('modal-open');
+        }
+
+        // Event listeners pour fermer les modals
+        document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                if (modal) {
+                    const backdropId = 'modal-backdrop-' + modal.id.replace('Modal', '');
+                    closeModal(modal.id, backdropId);
+                }
+            });
+        });
+
+        // Fermer modal en cliquant sur le backdrop
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-backdrop')) {
+                e.target.remove();
+                document.querySelectorAll('.modal.show').forEach(modal => {
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                });
+                document.body.classList.remove('modal-open');
+            }
+        });
+    </script>
+</body>
+</html>
