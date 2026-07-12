@@ -26,7 +26,7 @@
   {
     "id": 4,
     "nom": "Haja",
-    "fonction": "SecrÃÂÃÂ©taire ",
+    "fonction": "SecrÃÂÃÂÃÂÃÂ©taire ",
     "telephone": "0348672345",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828259654_1783826333493.jpg",
     "color": "#ff0000"
@@ -34,9 +34,17 @@
   {
     "id": 5,
     "nom": "Mamitiana ",
-    "fonction": "Secrétaire ",
+    "fonction": "SecrÃ©taire ",
     "telephone": "0348672345",
     "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828324797_1783826363281.jpg",
     "color": "#ffff00"
+  },
+  {
+    "id": 6,
+    "nom": "TANJONA",
+    "fonction": "Responsable général ",
+    "telephone": "0348672345",
+    "photo": "https://raw.githubusercontent.com/fetrasoatanjonait/katesizy/main/images/1783828378286_CoEditor_VID_20260611_233801.jpeg",
+    "color": "#00ffff"
   }
 ]
